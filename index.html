@@ -278,7 +278,7 @@
                 </div>
 
                 <div>
-                    <button class="control-btn" id="play-trigger" onclick="togglePlay()">▶️</button>
+                    <button class="control-btn" id="play-trigger" onclick="togglePlay()">🩹</button>
                 </div>
             </div>
         </div>
@@ -378,11 +378,11 @@
                     console.log("Audio file error or user interaction issue: ", err);
                     alert("Make sure your audio track is saved as 'music.mp3' in the exact same folder as this HTML file!");
                 });
-                playBtn.innerText = "💔";
+                playBtn.innerText = "❤️‍🩹";
                 disc.style.animationPlayState = 'running';
             } else {
                 audio.pause();
-                playBtn.innerText = "❤️‍🩹";
+                playBtn.innerText = "💔";
                 disc.style.animationPlayState = 'paused';
             }
         }
