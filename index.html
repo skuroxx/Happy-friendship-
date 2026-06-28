@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Jessica ✨</title>
+    <style>
+        :root {
+            --bg-color: #faf7f5;
+            --primary-pink: #fbc4ab;
+            --dark-pink: #f08080;
+            --butter: #fde2e4;
+            --text-color: #4a4e69;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- STAGE 1: INTRO GATE --- */
+        #intro-gate {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            z-index: 10;
+            background-color: var(--bg-color);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .pulse-btn {
+            background: var(--dark-pink);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 0 0 rgba(240, 128, 128, 0.7);
+            animation: pulse 1.8s infinite;
+            transition: transform 0.2s;
+        }
+
+        .pulse-btn:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(240, 128, 128, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(240, 128, 128, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(240, 128, 128, 0); }
+        }
+
+        /* --- STAGE 2: MAIN SITE --- */
+        #main-site {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            width: 100%;
+            max-width: 550px;
+            padding: 40px 20px;
+            transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+        }
+
+        /* Revealed States */
+        body.revealed #intro-gate {
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+        }
+
+        body.revealed #main-site {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Elements & Layout */
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(74, 78, 105, 0.04);
+            margin-bottom: 25px;
+            border: 1px solid rgba(0,0,0,0.01);
+            text-align: center;
+        }
+
+        .big-greeting {
+            font-size: 2.5rem;
+            color: var(--dark-pink);
+            margin-bottom: 15px;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .main-message {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: var(--text-color);
+            margin-bottom: 25px;
+        }
+
+        /* Compliment Badges */
+        .compliment-tag {
+            display: inline-block;
+            background: var(--butter);
+            color: #b56576;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Music Player UI */
+        .player-container {
+            background: #22222b;
+            color: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .album-art {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            animation: spin 10s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .track-info {
+            margin: 15px 0;
+        }
+
+        .track-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .track-artist {
+            color: #a0a0aa;
+            font-size: 0.9rem;
+        }
+
+        /* Custom Track Timeline Interface */
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 0.75rem;
+            color: #a0a0aa;
+            margin: 15px 0;
+        }
+
+        .progress-bar {
+            background: #444;
+            height: 6px;
+            border-radius: 3px;
+            flex-grow: 1;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            background: var(--dark-pink);
+            width: 0%;
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2.2rem;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Falling Confetti Canvas overlay */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- HIDDEN AUDIO ENGINE ELEMENT -->
+    <audio id="audio-file" src="music.mp3" preload="auto"></audio>
+
+    <!-- INTRO GATE PAGE -->
+    <div id="intro-gate">
+        <button class="pulse-btn" onclick="revealWebsite()">Click Me ✨</button>
+    </div>
+
+    <!-- MAIN INTERACTIVE CONTENT -->
+    <div id="main-site">
+        
+        <!-- Big Message Card -->
+        <div class="card">
+            <h1 class="big-greeting">Hey Jessica! 🎉</h1>
+            <p class="main-message">
+                Thanks so much for being such a wonderful, reliable friend. No special holiday required—just a genuine reminder that your energy, presence, and endless rants make life infinitely better. 🤍
+            </p>
+            
+            <hr style="border: 0; border-top: 1px dashed var(--primary-pink); margin: 20px 0;">
+            
+            <!-- Compliment Tags -->
+            <div style="margin-top: 15px;">
+                <span class="compliment-tag">✨ Genuinely Irreplaceable</span>
+                <span class="compliment-tag">😂 Contagious Laugh</span>
+                <span class="compliment-tag">🛡️ Fiercely Loyal</span>
+                <span class="compliment-tag">👾 Perfect Chaos Match</span>
+            </div>
+        </div>
+
+        <!-- Real Local Music Player Card -->
+        <div class="card">
+            <h2 style="font-size: 1.3rem; margin-bottom: 5px;">🎵 Your Favorite Track</h2>
+            <p style="font-size: 0.9rem; color: #888;">Turn up the volume and jam out!</p>
+            
+            <div class="player-container">
+                <div class="album-art" id="disc">💿</div>
+                <div class="track-info">
+                    <div class="track-title">Roll With It</div>
+                    <div class="track-artist">Oasis</div>
+                </div>
+                
+                <!-- Live Updating Timeline Bar -->
+                <div class="progress-bar-container">
+                    <span id="time-current">0:00</span>
+                    <div class="progress-bar" id="progress-timeline" onclick="seekAudio(event)">
+                        <div class="progress-fill" id="bar"></div>
+                    </div>
+                    <span id="time-total">0:00</span>
+                </div>
+
+                <div>
+                    <button class="control-btn" id="play-trigger" onclick="togglePlay()">▶️</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Website reveal transitions & triggering poppers
+        function revealWebsite() {
+            document.body.classList.add('reveal-started');
+            setTimeout(() => {
+                document.body.classList.add('revealed');
+                initConfetti();
+            }, 100);
+        }
+
+        // Custom Canvas Confetti Popper Engine
+        function initConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const colors = ['#f08080', '#fbc4ab', '#ffdac1', '#b5ead7', '#c7ceea', '#fff1c5'];
+            const confettiCount = 120;
+            const confettiPieces = [];
+
+            class Confetti {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * -canvas.height - 20; 
+                    this.size = Math.random() * 8 + 6;
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.speedX = Math.random() * 4 - 2;
+                    this.speedY = Math.random() * 5 + 4;
+                    this.rotation = Math.random() * 360;
+                    this.rotationSpeed = Math.random() * 4 - 2;
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.rotation += this.rotationSpeed;
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation * Math.PI / 180);
+                    ctx.fillStyle = this.color;
+                    ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                    ctx.restore();
+                }
+            }
+
+            for (let i = 0; i < confettiCount; i++) {
+                confettiPieces.push(new Confetti());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                let activePieces = 0;
+                confettiPieces.forEach(p => {
+                    if (p.y < canvas.height) {
+                        p.update();
+                        p.draw();
+                        activePieces++;
+                    }
+                });
+
+                if (activePieces > 0) {
+                    requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            animate();
+        }
+
+        // --- NATIVE LOCAL AUDIO PLAYER CONTROLS ---
+        const audio = document.getElementById('audio-file');
+        const playBtn = document.getElementById('play-trigger');
+        const disc = document.getElementById('disc');
+        const progressBar = document.getElementById('bar');
+        const timeCurrentText = document.getElementById('time-current');
+        const timeTotalText = document.getElementById('time-total');
+        const timelineContainer = document.getElementById('progress-timeline');
+
+        disc.style.animationPlayState = 'paused';
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play().catch(err => {
+                    console.log("Audio file error or user interaction issue: ", err);
+                    alert("Make sure your audio track is saved as 'music.mp3' in the exact same folder as this HTML file!");
+                });
+                playBtn.innerText = "⏸️";
+                disc.style.animationPlayState = 'running';
+            } else {
+                audio.pause();
+                playBtn.innerText = "▶️";
+                disc.style.animationPlayState = 'paused';
+            }
+        }
+
+        // Sync visual tracking systems to audio stream updates
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const percentage = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = percentage + "%";
+                
+                timeCurrentText.innerText = formatTime(audio.currentTime);
+                timeTotalText.innerText = formatTime(audio.duration);
+            }
+        });
+
+        // Initialize total time layout when data loads natively
+        audio.addEventListener('loadedmetadata', () => {
+            timeTotalText.innerText = formatTime(audio.duration);
+        });
+
+        // Click on progress bar to scrub/seek track position
+        function seekAudio(event) {
+            const totalWidth = timelineContainer.offsetWidth;
+            const clickX = event.offsetX;
+            if (audio.duration) {
+                audio.currentTime = (clickX / totalWidth) * audio.duration;
+            }
+        }
+
+        // Help utility function to format digits (e.g. 74 -> 1:14)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            let secs = Math.floor(seconds % 60);
+            if (secs < 10) secs = '0' + secs;
+            return mins + ":" + secs;
+        }
+
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('confetti-canvas');
+            if(canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        });
+    </script>
+</body>
+</html>
